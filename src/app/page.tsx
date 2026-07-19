@@ -12,6 +12,8 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const preloaderRef = useRef<HTMLDivElement>(null);
+  const preloaderCounterRef = useRef<HTMLDivElement>(null);
   
   // Slide Refs
   const heroRef = useRef<HTMLDivElement>(null);
@@ -29,6 +31,49 @@ export default function Home() {
 
   // Custom Cursor
   const cursorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const counter = { val: 0 };
+    const tl = gsap.timeline();
+    
+    tl.to(counter, {
+      val: 100,
+      duration: 2.5,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        if (preloaderCounterRef.current) {
+          preloaderCounterRef.current.innerText = Math.round(counter.val).toString().padStart(3, '0');
+        }
+      }
+    })
+    .to(preloaderRef.current, {
+      yPercent: -100,
+      duration: 1.2,
+      ease: "power4.inOut"
+    })
+    .fromTo(".hero-char", {
+      y: 150,
+      rotation: 15,
+      autoAlpha: 0,
+    }, {
+      y: 0,
+      rotation: 0,
+      autoAlpha: 1,
+      duration: 1.2,
+      stagger: 0.1,
+      ease: "power4.out"
+    }, "-=0.6")
+    .fromTo(".hero-sub", {
+      autoAlpha: 0,
+      y: 30
+    }, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.2,
+      ease: "power3.out"
+    }, "-=0.8");
+  }, []);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -140,22 +185,53 @@ export default function Home() {
 
       {/* Pinned Wrapper */}
       <div ref={wrapperRef} className="relative w-full h-screen overflow-hidden z-10">
-        
+        {/* --- GLOBAL CINEMATIC OVERLAYS --- */}
+        <div className="film-grain" />
+        <div className="vignette" />
+
+        {/* --- PRELOADER --- */}
+        <div ref={preloaderRef} className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center pointer-events-none">
+           <div className="overflow-hidden">
+             <div ref={preloaderCounterRef} className="font-serif text-[15vw] md:text-[10vw] text-white leading-none tracking-tight">000</div>
+           </div>
+           <div className="absolute bottom-12 font-sans text-[10px] uppercase tracking-[0.5em] text-white/50 animate-pulse">Loading Assets</div>
+        </div>
+
         {/* --- PROLOGUE: HERO --- */}
-        <div ref={heroRef} className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <div className="z-10 text-center px-4 overflow-hidden py-4">
-            <h1 className="hero-text font-serif text-[12vw] leading-none tracking-tight text-white opacity-90 drop-shadow-lg">
-              STUDIO
-            </h1>
-            <div className="hero-sub mt-8 overflow-hidden">
-              <p className="text-white/70 font-sans font-light tracking-[0.4em] uppercase text-sm md:text-xs">
-                Crafting Digital Excellence
+        <div ref={heroRef} className="absolute inset-0 flex items-center justify-center pointer-events-none px-6 md:px-12 lg:px-24">
+          <div className="z-10 w-full max-w-7xl flex flex-col relative h-full justify-center py-20">
+            
+            {/* Top Left / Top Right Asymmetric Elements */}
+            <div className="hero-sub flex justify-between w-full mb-auto mt-12 invisible">
+               <div className="text-white/50 font-sans font-medium text-[10px] tracking-[0.4em] uppercase space-y-1">
+                 <p>40° 42' 46" N</p>
+                 <p>74° 0' 21" W</p>
+               </div>
+               <div className="w-16 h-16 md:w-20 md:h-20 border border-white/20 rounded-full flex items-center justify-center animate-[spin_10s_linear_infinite] shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+                  <span className="text-white/70 font-sans text-[8px] md:text-[10px] tracking-[0.2em] uppercase">EST 2026</span>
+               </div>
+            </div>
+
+            {/* Massive Staggered Text */}
+            <div className="overflow-hidden py-4 -ml-2 md:-ml-4">
+              <h1 className="hero-text font-serif text-[18vw] md:text-[20vw] leading-[0.75] tracking-tighter text-white drop-shadow-2xl flex mix-blend-screen">
+                {"STUDIO".split('').map((char, i) => (
+                  <span key={i} className="hero-char inline-block invisible text-outline hover:text-white transition-colors duration-500 cursor-hover pointer-events-auto">{char}</span>
+                ))}
+              </h1>
+            </div>
+            
+            {/* Bottom Right Description */}
+            <div className="hero-sub self-end mt-auto max-w-xs md:max-w-sm text-right invisible">
+              <p className="text-white/80 font-sans font-light tracking-[0.2em] uppercase text-xs md:text-sm leading-relaxed mix-blend-screen">
+                We craft digital excellence through cinematic motion and architectural precision.
               </p>
             </div>
           </div>
-          <div className="hero-sub absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-70">
-            <span className="text-[10px] font-sans font-light uppercase tracking-[0.3em] mb-4 text-white">Scroll to Explore</span>
-            <div className="w-[1px] h-12 bg-white/50" />
+
+          <div className="hero-sub absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center invisible">
+            <span className="text-[10px] font-sans font-medium uppercase tracking-[0.3em] mb-4 text-white mix-blend-screen">Scroll to Explore</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-white/80 to-transparent" />
           </div>
         </div>
 
