@@ -15,8 +15,8 @@ const aalto = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "STUDIO | Aesthetic Web Experience",
-  description: "A premium, highly-interactive web experience featuring cinematic video scrolling.",
+  title: "STUDIO",
+  description: "minimalism",
 };
 
 export default function RootLayout({

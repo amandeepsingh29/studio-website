@@ -1,11 +1,20 @@
-# The Studio Experience
+# STUDIO
 
-It started with a simple idea: what if a website didn't just feel like a grid of boxes, but a cinematic journey?
+A minimalist, scroll-driven web experiment.
 
-We didn't want users to just scroll; we wanted them to scrub through time. By meticulously stitching together 423 high-resolution video frames and tying them perfectly to the user's scroll wheel, we transformed standard navigation into a breathtaking, 22,000-pixel digital film.
+![Interface](./Interface.png)
 
-![The Studio Interface](./Interface.png)
+## Overview
 
-This isn't just a website. It's an editorial statement. It features asymmetric layouts, massive hollow typography that reacts to a custom glass cursor, and a subtle analog film grain that grounds the entire digital experience in raw, cinematic reality. 
+STUDIO is a conceptual portfolio built with Next.js and GSAP. The entire site is tied to a single scroll trigger that scrubs through a massive sequence of 423 video frames, creating a 22,000-pixel visual journey instead of a traditional scrolling layout.
 
-Welcome to the future of web design. Welcome to the Studio.
+- **Stack**: Next.js 15, TailwindCSS, GSAP, React
+- **Typography**: Aalto Display
+- **Interactions**: Custom cursor masking, asymmetric geometric layouts, and scroll-linked video playback.
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
