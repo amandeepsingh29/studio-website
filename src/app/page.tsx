@@ -216,7 +216,7 @@ export default function Home() {
             <div className="overflow-hidden py-4 -ml-2 md:-ml-4">
               <h1 className="hero-text font-serif text-[18vw] md:text-[20vw] leading-[0.75] tracking-tighter text-white drop-shadow-2xl flex mix-blend-screen">
                 {"STUDIO".split('').map((char, i) => (
-                  <span key={i} className="hero-char inline-block invisible text-outline hover:text-white transition-colors duration-500 cursor-hover pointer-events-auto">{char}</span>
+                  <span key={i} className="hero-char inline-block invisible text-white hover:text-transparent hover:[-webkit-text-stroke:1px_rgba(255,255,255,0.3)] transition-all duration-500 cursor-hover pointer-events-auto">{char}</span>
                 ))}
               </h1>
             </div>

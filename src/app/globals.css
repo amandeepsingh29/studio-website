@@ -29,6 +29,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide Next.js Dev Indicator completely */
+nextjs-portal {
+  display: none !important;
+}
+
 /* Custom utilities */
 @layer utilities {
   .text-outline {
